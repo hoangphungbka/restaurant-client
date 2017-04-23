@@ -7,6 +7,8 @@ import android.widget.EditText;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
+import hust.hoangpt.restaurantclient.asynctask.LoginAsyncTask;
+
 public class MainActivity extends AppCompatActivity {
 
     private EditText edtUsername, edtPassword;
