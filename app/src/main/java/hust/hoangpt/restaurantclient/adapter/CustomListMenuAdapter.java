@@ -35,7 +35,7 @@ public class CustomListMenuAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder holder;
         if (convertView == null) {
-            convertView = layoutInflater.inflate(R.layout.layout_listview_menuitems, null);
+            convertView = layoutInflater.inflate(R.layout.layout_custom_listitems, null);
             holder = new ViewHolder();
             holder.imageViewAvatar = (ImageView) convertView.findViewById(R.id.imageViewAvatar);
             holder.textViewName = (TextView) convertView.findViewById(R.id.textViewName);

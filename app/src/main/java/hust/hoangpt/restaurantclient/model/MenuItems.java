@@ -1,6 +1,8 @@
 package hust.hoangpt.restaurantclient.model;
 
-public class MenuItems {
+import java.io.Serializable;
+
+public class MenuItems implements Serializable {
 
     private int id, categoryId;
     private String name, image;

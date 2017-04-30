@@ -19,7 +19,9 @@
             </intent-filter>
         </activity>
         <activity android:name=".WaiterMainActivity" />
-        <activity android:name=".ChefMainActivity"></activity>
+        <activity android:name=".ChefMainActivity" />
+        <activity android:name=".WaiterTablesActivity" />
+        <activity android:name=".WaiterOrdersActivity" />
     </application>
 
 </manifest>
