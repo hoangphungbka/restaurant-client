@@ -38,14 +38,20 @@ public class WaiterOrdersActivity extends AppCompatActivity {
         this.listViewOrders.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Orders clickedOrder = (Orders) listViewOrders.getItemAtPosition(position);
-                Bundle dataBundle = new Bundle();
-                dataBundle.putSerializable("employee", employee);
-                dataBundle.putSerializable("clickedOrder", clickedOrder);
-                Intent waiterDetailsIntent = new Intent(WaiterOrdersActivity.this, WaiterDetailsActivity.class);
-                waiterDetailsIntent.putExtra("dataBundle", dataBundle);
-                WaiterOrdersActivity.this.startActivity(waiterDetailsIntent);
+                processClickedItemOnListView(position);
             }
         });
+    }
+
+    private void processClickedItemOnListView(int position) {
+        Orders clickedOrder = (Orders) listViewOrders.getItemAtPosition(position);
+
+        Bundle dataBundle = new Bundle();
+        dataBundle.putSerializable("employee", employee);
+        dataBundle.putSerializable("clickedOrder", clickedOrder);
+
+        Intent waiterDetailsIntent = new Intent(this, WaiterDetailsActivity.class);
+        waiterDetailsIntent.putExtra("dataBundle", dataBundle);
+        this.startActivity(waiterDetailsIntent);
     }
 }

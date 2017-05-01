@@ -11,5 +11,24 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="hust.hoangpt.restaurantclient.WaiterDetailsActivity">
 
-    
+
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:id="@+id/list_order_details"
+        android:layout_weight="1"/>
+
+    <Button
+        android:text="@string/send_processing_request"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/btnSendProcessingRequest"
+        android:onClick="sendProcessingRequest"/>
+
+    <Button
+        android:text="@string/send_payment_request"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/btnSendPaymentRequest"
+        android:onClick="sendPaymentRequest"/>
 </LinearLayout>

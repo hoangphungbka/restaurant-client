@@ -19,10 +19,10 @@
             </intent-filter>
         </activity>
         <activity android:name=".WaiterMainActivity" />
-        <activity android:name=".ChefMainActivity" />
         <activity android:name=".WaiterTablesActivity" />
         <activity android:name=".WaiterOrdersActivity" />
-        <activity android:name=".WaiterDetailsActivity"></activity>
+        <activity android:name=".WaiterDetailsActivity"/>
+        <activity android:name=".ChefMainActivity" />
     </application>
 
 </manifest>
