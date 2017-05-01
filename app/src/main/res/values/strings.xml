@@ -2,4 +2,6 @@
     <string name="app_name">RestaurantClient</string>
     <string name="select_order">Select Order:</string>
     <string name="enter_quantity">Enter Quantity:</string>
+    <string name="send_processing_request">Yêu Cầu Chế Biến</string>
+    <string name="send_payment_request">Yêu Cầu Thanh Toán</string>
 </resources>

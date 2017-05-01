@@ -14,17 +14,21 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 
+import hust.hoangpt.restaurantclient.WaiterOrdersActivity;
 import hust.hoangpt.restaurantclient.model.Orders;
 
 public class LoadOrdersAsyncTask extends AsyncTask<Void, Void, String> {
 
     private ArrayList<Orders> arrayListOrders;
     private ArrayAdapter<Orders> arrayAdapterOrders;
+    private WaiterOrdersActivity waiterOrdersContext;
 
     public LoadOrdersAsyncTask(ArrayList<Orders> arrayListOrders,
-                               ArrayAdapter<Orders> arrayAdapterOrders) {
+                               ArrayAdapter<Orders> arrayAdapterOrders,
+                               WaiterOrdersActivity waiterOrdersContext) {
         this.arrayListOrders = arrayListOrders;
         this.arrayAdapterOrders = arrayAdapterOrders;
+        this.waiterOrdersContext = waiterOrdersContext;
     }
 
     @Override
@@ -57,15 +61,17 @@ public class LoadOrdersAsyncTask extends AsyncTask<Void, Void, String> {
         try {
             JSONObject JSONDocumentRoot = new JSONObject(resultString);
             JSONArray JSONOrders = JSONDocumentRoot.getJSONArray("servingOrders");
-            arrayListOrders.clear();
+            if (waiterOrdersContext == null) arrayListOrders.clear();
             for (int i = 0; i < JSONOrders.length(); i++) {
                 JSONObject JSONOrder = JSONOrders.getJSONObject(i);
                 Orders order = new Orders(JSONOrder.getInt("id"), JSONOrder.getInt("total_amount"),
                         JSONOrder.getInt("table_number"), JSONOrder.getInt("employee_id"),
                         JSONOrder.getInt("status"));
-                arrayListOrders.add(order);
+                if (waiterOrdersContext == null) arrayListOrders.add(order);
+                else waiterOrdersContext.arrayListOrders.add(order);
             }
-            arrayAdapterOrders.notifyDataSetChanged();
+            if (waiterOrdersContext == null) arrayAdapterOrders.notifyDataSetChanged();
+            else waiterOrdersContext.adapterListViewOrders.notifyDataSetChanged();
         } catch (JSONException e) {
             e.printStackTrace();
         }

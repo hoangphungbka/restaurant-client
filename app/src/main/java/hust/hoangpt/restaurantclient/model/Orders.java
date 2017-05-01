@@ -1,6 +1,8 @@
 package hust.hoangpt.restaurantclient.model;
 
-public class Orders {
+import java.io.Serializable;
+
+public class Orders implements Serializable {
 
     private int id, totalAmount, tableNumber, employeeId, status;
 

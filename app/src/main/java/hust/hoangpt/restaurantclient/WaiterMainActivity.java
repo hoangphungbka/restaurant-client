@@ -71,15 +71,17 @@ public class WaiterMainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        Bundle employeeBundle = new Bundle();
+        employeeBundle.putSerializable("employee", employee);
         switch (item.getItemId()) {
             case R.id.menu_items:
                 break;
             case R.id.menu_orders:
-                Toast.makeText(this, "orders", Toast.LENGTH_LONG).show();
+                Intent waiterOrdersIntent = new Intent(this, WaiterOrdersActivity.class);
+                waiterOrdersIntent.putExtra("employeeBundle", employeeBundle);
+                this.startActivity(waiterOrdersIntent);
                 break;
             case R.id.menu_tables:
-                Bundle employeeBundle = new Bundle();
-                employeeBundle.putSerializable("employee", employee);
                 Intent waiterTablesIntent = new Intent(this, WaiterTablesActivity.class);
                 waiterTablesIntent.putExtra("employeeBundle", employeeBundle);
                 this.startActivity(waiterTablesIntent);
@@ -140,7 +142,12 @@ public class WaiterMainActivity extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 Orders selectedOrder = (Orders) spinnerOrders.getSelectedItem();
-                int quantity = Integer.parseInt(editQuantity.getText().toString());
+                String quantityString = editQuantity.getText().toString();
+                if (quantityString.isEmpty()) {
+                    Toast.makeText(getBaseContext(), "Please Enter Quantity.", Toast.LENGTH_LONG).show();
+                    return;
+                }
+                int quantity = Integer.parseInt(quantityString);
                 (new CreateOrderDetailTask(getBaseContext())).execute(menuItem.getId(),
                         selectedOrder.getId(), quantity);
             }
@@ -150,7 +157,7 @@ public class WaiterMainActivity extends AppCompatActivity {
         dialog.setOnShowListener(new DialogInterface.OnShowListener() {
             @Override
             public void onShow(DialogInterface dialog) {
-                (new LoadOrdersAsyncTask(arrayListOrders, arrayAdapterOrders)).execute();
+                (new LoadOrdersAsyncTask(arrayListOrders, arrayAdapterOrders, null)).execute();
             }
         });
         dialog.show();
