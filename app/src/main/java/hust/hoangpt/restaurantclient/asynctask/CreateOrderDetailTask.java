@@ -13,6 +13,8 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+import hust.hoangpt.restaurantclient.R;
+
 public class CreateOrderDetailTask extends AsyncTask<Integer, Void, String> {
 
     private Context context;

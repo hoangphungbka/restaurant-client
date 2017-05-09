@@ -12,22 +12,21 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+import hust.hoangpt.restaurantclient.ChefMainActivity;
 import hust.hoangpt.restaurantclient.R;
-import hust.hoangpt.restaurantclient.WaiterMainActivity;
-import hust.hoangpt.restaurantclient.model.Categories;
-import hust.hoangpt.restaurantclient.model.MenuItems;
+import hust.hoangpt.restaurantclient.model.OrderDetails;
 
-public class LoadItemsAsyncTask extends AsyncTask<Void, Void, String> {
+public class LoadDetailsAsyncTask extends AsyncTask<Void, Void, String> {
 
-    private WaiterMainActivity waiterMainContext;
+    private ChefMainActivity chefMainContext;
 
-    public LoadItemsAsyncTask(WaiterMainActivity waiterMainContext) {
-        this.waiterMainContext = waiterMainContext;
+    public LoadDetailsAsyncTask(ChefMainActivity chefMainContext) {
+        this.chefMainContext = chefMainContext;
     }
 
     @Override
     protected String doInBackground(Void... params) {
-        String url = "http://192.168.1.119/restaurant/api/pages/get-menu-items-by-category.json";
+        String url = "http://192.168.1.119/restaurant/api/pages/load-processing-order-details.json";
         try {
             HttpURLConnection httpConnection = (HttpURLConnection) (new URL(url)).openConnection();
             httpConnection.setAllowUserInteraction(false);
@@ -54,23 +53,20 @@ public class LoadItemsAsyncTask extends AsyncTask<Void, Void, String> {
     protected void onPostExecute(String resultString) {
         try {
             JSONObject JSONDocumentRoot = new JSONObject(resultString);
-            JSONArray JSONCategories = JSONDocumentRoot.getJSONArray("categories");
-            for (int i = 0; i < JSONCategories.length(); i++) {
-                JSONObject JSONCategory = JSONCategories.getJSONObject(i);
-                Categories category = new Categories(JSONCategory.getInt("id"), JSONCategory.getString("name"));
-
-                JSONArray JSONMenuItems = JSONCategory.getJSONArray("menu_items");
-                for (int j = 0; j < JSONMenuItems.length(); j++) {
-                    JSONObject JSONMenuItem = JSONMenuItems.getJSONObject(j);
-                    MenuItems menuItem = new MenuItems(JSONMenuItem.getInt("id"),JSONMenuItem.getInt("category_id"),
-                            JSONMenuItem.getString("image"), (float)JSONMenuItem.getDouble("price"), JSONMenuItem.getString("name"));
-                    category.addMenuItems(menuItem);
-                }
-                waiterMainContext.listCategories.add(category);
+            JSONArray JSONOrderDetails = JSONDocumentRoot.getJSONArray("orderDetails");
+            chefMainContext.arrayListOrderDetails.clear();
+            for (int i = 0; i < JSONOrderDetails.length(); i++) {
+                JSONObject JSONOrderDetail = JSONOrderDetails.getJSONObject(i);
+                OrderDetails orderDetail = new OrderDetails(JSONOrderDetail.getInt("id"),
+                        JSONOrderDetail.getInt("quantity"), JSONOrderDetail.getInt("status"),
+                        JSONOrderDetail.getInt("amount"), JSONOrderDetail.getInt("item_price"),
+                        JSONOrderDetail.getString("item_name"));
+                chefMainContext.arrayListOrderDetails.add(orderDetail);
             }
-            waiterMainContext.adapterSpinner.notifyDataSetChanged();
+            chefMainContext.arrayAdapterOrderDetails.notifyDataSetChanged();
         } catch (JSONException e) {
             e.printStackTrace();
         }
+        super.onPostExecute(resultString);
     }
 }

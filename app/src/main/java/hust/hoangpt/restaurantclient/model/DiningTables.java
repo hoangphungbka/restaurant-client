@@ -36,7 +36,7 @@ public class DiningTables {
 
     @Override
     public String toString() {
-        String statusString = (status == 0) ? "unoccupied" : "occupied";
-        return "Table: " + tableNumber + ". Chairs: " + chairsCount + ". Status: " + statusString;
+        String statusString = (status == 0) ? "Trống" : "Đang Sử Dụng";
+        return "Bàn Số: " + tableNumber + ". Số Ghế: " + chairsCount + ". " + statusString;
     }
 }

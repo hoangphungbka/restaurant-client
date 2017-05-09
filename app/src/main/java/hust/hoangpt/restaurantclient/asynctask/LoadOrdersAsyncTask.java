@@ -14,6 +14,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 
+import hust.hoangpt.restaurantclient.R;
 import hust.hoangpt.restaurantclient.WaiterOrdersActivity;
 import hust.hoangpt.restaurantclient.model.Orders;
 

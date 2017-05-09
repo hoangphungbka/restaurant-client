@@ -6,11 +6,14 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.Toast;
+
+import com.github.nkzawa.socketio.client.Socket;
 
 import java.util.ArrayList;
 
 import hust.hoangpt.restaurantclient.asynctask.LoadOrderDetailsTask;
+import hust.hoangpt.restaurantclient.asynctask.SendPaymentTask;
+import hust.hoangpt.restaurantclient.asynctask.SendProcessingTask;
 import hust.hoangpt.restaurantclient.model.Employees;
 import hust.hoangpt.restaurantclient.model.OrderDetails;
 import hust.hoangpt.restaurantclient.model.Orders;
@@ -22,6 +25,7 @@ public class WaiterDetailsActivity extends AppCompatActivity {
     public ListView listOrderDetails;
     public ArrayList<OrderDetails> arrayListOrderDetails = new ArrayList<>();
     public ArrayAdapter<OrderDetails> arrayAdapterOrderDetails;
+    public Socket mSocket = SocketHelper.loadSocket();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,10 +47,14 @@ public class WaiterDetailsActivity extends AppCompatActivity {
     }
 
     public void sendProcessingRequest(View view) {
-        Toast.makeText(this, "process", Toast.LENGTH_LONG).show();
+        for (OrderDetails orderDetail : arrayListOrderDetails) {
+            if (orderDetail.getStatus() == 0) {
+                (new SendProcessingTask(this)).execute(orderDetail.getId());
+            }
+        }
     }
 
     public void sendPaymentRequest(View view) {
-        Toast.makeText(this, "payment", Toast.LENGTH_LONG).show();
+        (new SendPaymentTask(this)).execute(clickedOrder.getId());
     }
 }

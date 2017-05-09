@@ -7,17 +7,21 @@ import android.widget.EditText;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
+import com.github.nkzawa.socketio.client.Socket;
+
 import hust.hoangpt.restaurantclient.asynctask.LoginAsyncTask;
 
 public class MainActivity extends AppCompatActivity {
 
     private EditText edtUsername, edtPassword;
     private RadioGroup ragRoles;
+    private Socket mSocket = SocketHelper.loadSocket();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.setContentView(R.layout.activity_main);
+        mSocket.connect();
         edtUsername = (EditText) this.findViewById(R.id.edtUsername);
         edtPassword = (EditText) this.findViewById(R.id.edtPassword);
         ragRoles = (RadioGroup) this.findViewById(R.id.ragRoles);

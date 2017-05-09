@@ -13,21 +13,19 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 import hust.hoangpt.restaurantclient.R;
-import hust.hoangpt.restaurantclient.WaiterTablesActivity;
+import hust.hoangpt.restaurantclient.WaiterDetailsActivity;
 
-public class CreateOrderAsyncTask extends AsyncTask<Integer, Void, String> {
+public class SendPaymentTask extends AsyncTask<Integer, Void, String> {
 
-    private WaiterTablesActivity waiterTablesContext;
+    private WaiterDetailsActivity waiterDetailsContext;
 
-    public CreateOrderAsyncTask(WaiterTablesActivity waiterTablesContext) {
-        this.waiterTablesContext = waiterTablesContext;
+    public SendPaymentTask(WaiterDetailsActivity waiterDetailsContext) {
+        this.waiterDetailsContext = waiterDetailsContext;
     }
 
     @Override
     protected String doInBackground(Integer... params) {
-        int tableNumber = params[0]; int employeeId = params[1];
-        String url = "http://192.168.1.119/restaurant/api/pages/create-order-for-table/"
-                + tableNumber + "/" + employeeId + ".json";
+        String url = "http://192.168.1.119/restaurant/api/pages/send-payment-request/" + params[0] + ".json";
         try {
             HttpURLConnection httpConnection = (HttpURLConnection) (new URL(url)).openConnection();
             httpConnection.setAllowUserInteraction(false);
@@ -54,13 +52,9 @@ public class CreateOrderAsyncTask extends AsyncTask<Integer, Void, String> {
     protected void onPostExecute(String resultString) {
         try {
             JSONObject JSONDocumentRoot = new JSONObject(resultString);
-            int result = JSONDocumentRoot.getInt("result");
-
-            if (result == 0) {
-                Toast.makeText(waiterTablesContext, "Create Order Failure.", Toast.LENGTH_LONG).show();
-            } else {
-                Toast.makeText(waiterTablesContext, "Create Order Success.", Toast.LENGTH_LONG).show();
-                (new LoadTablesAsyncTask(waiterTablesContext)).execute();
+            if (JSONDocumentRoot.getInt("result") == 1) {
+                waiterDetailsContext.mSocket.emit("send-payment-request", "waiter send payment request.");
+                Toast.makeText(waiterDetailsContext, "Gui Yeu Cau Thanh Cong", Toast.LENGTH_LONG).show();
             }
         } catch (JSONException e) {
             e.printStackTrace();

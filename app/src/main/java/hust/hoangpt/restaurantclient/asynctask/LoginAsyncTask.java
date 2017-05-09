@@ -18,6 +18,7 @@ import java.net.URLConnection;
 import java.net.URLEncoder;
 
 import hust.hoangpt.restaurantclient.ChefMainActivity;
+import hust.hoangpt.restaurantclient.R;
 import hust.hoangpt.restaurantclient.WaiterMainActivity;
 import hust.hoangpt.restaurantclient.model.Employees;
 

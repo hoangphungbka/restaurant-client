@@ -44,27 +44,6 @@ public class WaiterTablesActivity extends AppCompatActivity {
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        this.getMenuInflater().inflate(R.menu.menu_waiter_main, menu);
-        return super.onCreateOptionsMenu(menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.menu_items:
-                Toast.makeText(this, "items", Toast.LENGTH_LONG).show();
-                break;
-            case R.id.menu_orders:
-                Toast.makeText(this, "orders", Toast.LENGTH_LONG).show();
-                break;
-            case R.id.menu_tables:
-                break;
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
-    @Override
     public void onCreateContextMenu(ContextMenu menu, View view, ContextMenu.ContextMenuInfo menuInfo) {
         menu.setHeaderTitle("Select An Action");
         menu.add(Menu.NONE, 1, Menu.NONE, "Create Order");

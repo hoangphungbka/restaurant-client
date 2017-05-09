@@ -4,4 +4,6 @@
     <string name="enter_quantity">Enter Quantity:</string>
     <string name="send_processing_request">Gửi Yêu Cầu Chế Biến</string>
     <string name="send_payment_request">Gửi Yêu Cầu Thanh Toán</string>
+    <string name="notify_processing_complete">Thông Báo Chế Biến Xong</string>
+    <string name="ip_address">192.168.1.119</string>
 </resources>
